@@ -48,13 +48,15 @@ plot_b2 <- ggplot() +
             aes(x = Fecha, y = var_il, group = 1
                 ,color = "Variación Indice Laspeyres")) + 
   geom_histogram(data = base_p2
-                 ,aes(x = Fecha, y = indice_laspeyres, fill = "Indice Laspeyres")
+                 ,aes(x = Fecha, y = indice_laspeyres/5, fill = "Indice Laspeyres")
                  ,stat = "identity", alpha = .3) + 
   scale_color_manual("", values = c("Variación Indice Laspeyres" = "royalblue3")) + 
   scale_fill_manual("", values = "orangered3") + 
+  scale_y_continuous(sec.axis = sec_axis(trans=~.*10, 
+                                         name="Valor Índice Laspeyres")) + 
   theme_light() + 
   labs(x = NULL, 
-       y = "Valor del Índice",
+       y = "Porcentaje (%)",
        title = "Alquiler y arriendamiento de vehículos automotores",
        subtitle = "Índice Laspeyres año 2014 = 100");plot_b2
 
@@ -88,7 +90,6 @@ actividad <- base_servicios %>%
 # "Transporte y almacenamiento" para las actividades economicas 4923 y 521, 
 # "Actividades de alojamiento y de servicio de comidas" para 561 y 562, 
 # y "Otras actividades de servicios" para la 96
-
 ACT_ECONOMICA  <- c(4923, 521, 561, 562, 96)
 GLOSA_ACT_ECON <- c("Transporte y almacenamiento",
                     "Transporte y almacenamiento",
@@ -102,7 +103,4 @@ actividad <- actividad %>%
 
 # f. Guarde el desarrollo en formato imagen RData con el 
 # nombre de "Desarrollo_Prueba_SDCS_P5.RData".
-saveRDS(ACT_GLOSA, file = "ACT_GLOSA.Rds")
-
-
-
+save.image("output/PruebaTecnicaSDCS_INE_AD.RData")
